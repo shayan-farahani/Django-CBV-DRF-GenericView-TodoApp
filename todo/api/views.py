@@ -5,7 +5,8 @@ from .serializers import TaskSerializer
 from rest_framework import status
 
 
-class TaskListApi(generics.GenericAPIView):
+
+class TaskListGenericsApiView(generics.GenericAPIView):
     '''
     create and retrieve model instance
     '''
@@ -22,10 +23,10 @@ class TaskListApi(generics.GenericAPIView):
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
 
-class TaskDetailApi(generics.GenericAPIView):
+class TaskDetailGenericsApiView(generics.GenericAPIView):
     '''
     delete and retrieve  and update model instance
     '''
@@ -38,13 +39,25 @@ class TaskDetailApi(generics.GenericAPIView):
         return Response(serializer.data)
 
     def put(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, status=status.HTTP_201_CREATED)
+        instance = self.get_object()
+        serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
         return Response(serializer.data)
 
     def delete(self, request, *args, **kwargs):
         instance = self.get_object().delete()
-        return Response({'detail':'Cleared successfully'}, status=status.HTTP_204_NO_CONTENT)
+        return Response({'detail':'Cleared successfully'})
 
         
+# mixins
+
+class TaskListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+
+class TaskDetailRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+

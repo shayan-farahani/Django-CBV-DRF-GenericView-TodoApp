@@ -1,5 +1,8 @@
 {
     "[python]": {
         "editor.defaultFormatter": null
-    }
+    },
+    "cSpell.words": [
+        "simplejwt"
+    ]
 }

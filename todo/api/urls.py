@@ -4,7 +4,7 @@ from . import views
 app_name = 'api'
 
 urlpatterns = [
-    path('', views.TaskListApi.as_view(), name='task-list'),
-    path('<int:pk>', views.TaskDetailApi.as_view(), name='task-detail')
+    path('', views.TaskListCreateAPIView.as_view(), name='task-list'),
+    path('<int:pk>', views.TaskDetailRetrieveUpdateDestroyAPIView.as_view(), name='task-detail')
     
 ]
