@@ -6,7 +6,7 @@
   <h3 align="center">django project</h3>
 
   <p align="center">
-    this is example repository for django pytest
+    this is example repo for django
     <br />
     <br />
     <a href="https://www.geeksforgeeks.org/python-todo-webapp-using-django/"><strong>docs for todo</strong></a>
