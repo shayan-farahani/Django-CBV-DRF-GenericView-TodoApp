@@ -38,11 +38,11 @@ class LoginSerializer(serializers.Serializer):
         max_length=128,
         write_only=True,
     )
+    remember_me = serializers.BooleanField(required=False)
 
     def validate(self, data):
         username = data.get('username')
         password = data.get('password')
-
         if username and password:
             user = authenticate(
                 request= self.context.get('request'),                                            

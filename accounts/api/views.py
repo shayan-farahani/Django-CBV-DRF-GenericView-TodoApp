@@ -11,8 +11,11 @@ class LoginView(generics.GenericAPIView):
         serializer = LoginSerializer(data=request.data, many=False)
         if serializer.is_valid():
             user = serializer.validated_data.get('user')
+            remember_me = serializer.validated_data.get("remember_me")
             if user is not None and user.is_active:
                 login(request, user)
+                if not remember_me:
+                    request.session.set_expiry(0)
                 return Response(serializer.data, status=200)
             return Response(serializer.errors, status=400)    
         return Response(serializer.errors, status=400)    
